@@ -14,11 +14,14 @@
 | 论文写作 / 审稿 | [mean-reviewer-skill](skills/mean-reviewer-skill) | [xz-liu/mean-reviewer-skill](https://github.com/xz-liu/mean-reviewer-skill) |
 | 论文写作 / 审稿 | [awesome-rebuttal](skills/awesome-rebuttal) | [xiongqi123123/awesome-rebuttal](https://github.com/xiongqi123123/awesome-rebuttal) |
 | 图表 | [paper-plot-skills](skills/paper-plot-skills) | [Trae1ounG/paper-plot-skills](https://github.com/Trae1ounG/paper-plot-skills) |
+| 图表 | [drawio-skill](skills/drawio-skill) | [Agents365-ai/drawio-skill](https://github.com/Agents365-ai/drawio-skill) |
 | 论文传播 | [paper2anything](skills/paper2anything) | [QuZhan51496/paper2anything](https://github.com/QuZhan51496/paper2anything) |
 | 演示稿 / PPT | [visual-deck](skills/visual-deck) | [xiaomoBoy/visual-deck](https://github.com/xiaomoBoy/visual-deck) |
 | 演示稿 / PPT | [ppt-master](skills/ppt-master) | [hugohe3/ppt-master](https://github.com/hugohe3/ppt-master) |
 | 演示稿 / PPT | [frontend-slides](skills/frontend-slides) | [zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) |
 | UI / 设计 | [design-skills](skills/design-skills) | [emilkowalski/skills](https://github.com/emilkowalski/skills) |
+| 编程 / Agent 行为 | [karpathy-guidelines](skills/karpathy-guidelines) | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) |
+| Prompt 工程 | [prompt-master](skills/prompt-master) | [nidhinjs/prompt-master](https://github.com/nidhinjs/prompt-master) |
 | 工具 / CLI 配置 | [cc-switch-cli-setup](skills/cc-switch-cli-setup) | hub-owned（本仓库） |
 
 ## 快速开始
@@ -61,6 +64,7 @@ git submodule update --init --recursive
 | Skill | 说明 |
 |-------|------|
 | paper-plot-skills | 顶会风格图表绘制与复现（按风格填数据 / 从截图复现） |
+| drawio-skill | 自然语言 / 代码 / 基础设施 → 可编辑 `.drawio`，并可导出 PNG / SVG / PDF / JPG |
 
 ### 论文传播
 
@@ -82,6 +86,18 @@ git submodule update --init --recursive
 |-------|------|
 | design-skills | Design Engineering（含 `apple-design`）：动画、界面与 UI 库选型 |
 
+### 编程 / Agent 行为
+
+| Skill | 说明 |
+|-------|------|
+| karpathy-guidelines | 减少错误假设、过度设计和无关改动，用可验证的成功标准驱动编程 |
+
+### Prompt 工程
+
+| Skill | 说明 |
+|-------|------|
+| prompt-master | 为具体 AI 工具生成、修正和适配精准 Prompt |
+
 ### 工具 / CLI 配置
 
 | Skill | 说明 |
@@ -101,10 +117,13 @@ npx skills@latest add emilkowalski/skills
      → mean-reviewer-skill（投稿前）
      → awesome-rebuttal（审稿回复）
 
-画图 → paper-plot-skills
+论文图表 → paper-plot-skills
+流程图 / 架构图 → drawio-skill
 传播 → paper2anything
 演示 → visual-deck / frontend-slides / ppt-master
 界面 → design-skills
+写代码 → karpathy-guidelines
+写 Prompt → prompt-master
 CLI  → cc-switch-cli-setup（Codex / Claude Code 供应商切换）
 ```
 
