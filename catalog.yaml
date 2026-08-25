@@ -38,6 +38,13 @@ skills:
     repo: https://github.com/Trae1ounG/paper-plot-skills
     description: 顶会论文图表复现与绘制。
 
+  - id: drawio-skill
+    category: figures
+    path: skills/drawio-skill
+    repo: https://github.com/Agents365-ai/drawio-skill
+    description: 将自然语言、代码或基础设施转为可编辑 .drawio，并导出 PNG / SVG / PDF / JPG。
+    note: 生成和导出需要 draw.io desktop CLI。
+
   - id: paper2anything
     category: dissemination
     path: skills/paper2anything
@@ -69,6 +76,18 @@ skills:
     description: Design Engineering skills（含 apple-design）。
     note: 也可 `npx skills@latest add emilkowalski/skills`
 
+  - id: karpathy-guidelines
+    category: coding
+    path: skills/karpathy-guidelines
+    repo: https://github.com/multica-ai/andrej-karpathy-skills
+    description: 减少错误假设、过度设计和无关改动，用可验证的成功标准驱动编程。
+
+  - id: prompt-master
+    category: prompting
+    path: skills/prompt-master
+    repo: https://github.com/nidhinjs/prompt-master
+    description: 为具体 AI 工具生成、修正和适配精准 Prompt。
+
   - id: cc-switch-cli-setup
     category: tooling
     path: skills/cc-switch-cli-setup
@@ -82,4 +101,6 @@ categories:
   dissemination: 论文传播
   slides: 演示稿 / PPT
   design: UI / 设计
+  coding: 编程 / Agent 行为
+  prompting: Prompt 工程
   tooling: 工具 / CLI 配置
