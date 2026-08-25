@@ -1,0 +1,17 @@
+# Local / OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Python / caches accidentally created while browsing skills
+__pycache__/
+*.pyc
+.pytest_cache/
+node_modules/
+
+# Install leftovers
+*.log

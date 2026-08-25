@@ -1,0 +1,33 @@
+[submodule "skills/anti-defensive-writing"]
+	path = skills/anti-defensive-writing
+	url = https://github.com/Kiterlin/anti-defensive-writing.git
+[submodule "skills/academic-research-skills"]
+	path = skills/academic-research-skills
+	url = https://github.com/imbad0202/academic-research-skills.git
+[submodule "skills/citation-check-skill"]
+	path = skills/citation-check-skill
+	url = https://github.com/serenakeyitan/citation-check-skill.git
+[submodule "skills/mean-reviewer-skill"]
+	path = skills/mean-reviewer-skill
+	url = https://github.com/xz-liu/mean-reviewer-skill.git
+[submodule "skills/awesome-rebuttal"]
+	path = skills/awesome-rebuttal
+	url = https://github.com/xiongqi123123/awesome-rebuttal.git
+[submodule "skills/paper-plot-skills"]
+	path = skills/paper-plot-skills
+	url = https://github.com/Trae1ounG/paper-plot-skills.git
+[submodule "skills/paper2anything"]
+	path = skills/paper2anything
+	url = https://github.com/QuZhan51496/paper2anything.git
+[submodule "skills/visual-deck"]
+	path = skills/visual-deck
+	url = https://github.com/xiaomoBoy/visual-deck.git
+[submodule "skills/ppt-master"]
+	path = skills/ppt-master
+	url = https://github.com/hugohe3/ppt-master.git
+[submodule "skills/frontend-slides"]
+	path = skills/frontend-slides
+	url = https://github.com/zarazhangrui/frontend-slides.git
+[submodule "skills/design-skills"]
+	path = skills/design-skills
+	url = https://github.com/emilkowalski/skills.git

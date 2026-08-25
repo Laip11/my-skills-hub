@@ -1,0 +1,85 @@
+# Skills Hub catalog — each entry is an independent upstream skill.
+# This file is an index only; skills are NOT merged into one skill.
+
+skills:
+  - id: anti-defensive-writing
+    category: writing-review
+    path: skills/anti-defensive-writing
+    repo: https://github.com/Kiterlin/anti-defensive-writing
+    description: 去掉过度 defensiveness，让论述更直接、claim-forward。
+
+  - id: academic-research-skills
+    category: writing-review
+    path: skills/academic-research-skills
+    repo: https://github.com/imbad0202/academic-research-skills
+    description: 学术研究全流程 research → write → review → revise → finalize。
+
+  - id: citation-check-skill
+    category: writing-review
+    path: skills/citation-check-skill
+    repo: https://github.com/serenakeyitan/citation-check-skill
+    description: 校验 LLM 输出中的引用是否真实、可核验。
+
+  - id: mean-reviewer-skill
+    category: writing-review
+    path: skills/mean-reviewer-skill
+    repo: https://github.com/xz-liu/mean-reviewer-skill
+    description: 「最刻薄审稿人」投稿前压力测试。
+
+  - id: awesome-rebuttal
+    category: writing-review
+    path: skills/awesome-rebuttal
+    repo: https://github.com/xiongqi123123/awesome-rebuttal
+    description: Rebuttal 全流程：分析意见、实验分流、起草回复、安全门控。
+
+  - id: paper-plot-skills
+    category: figures
+    path: skills/paper-plot-skills
+    repo: https://github.com/Trae1ounG/paper-plot-skills
+    description: 顶会论文图表复现与绘制。
+
+  - id: paper2anything
+    category: dissemination
+    path: skills/paper2anything
+    repo: https://github.com/QuZhan51496/paper2anything
+    description: 论文 PDF → slides / poster / webpage / 小红书 / 公众号。
+
+  - id: visual-deck
+    category: slides
+    path: skills/visual-deck
+    repo: https://github.com/xiaomoBoy/visual-deck
+    description: 选题/大纲 → 图文混合全屏 HTML 演示稿。
+
+  - id: ppt-master
+    category: slides
+    path: skills/ppt-master
+    repo: https://github.com/hugohe3/ppt-master
+    description: 文档/选题 → 原生 PPTX（SVG → DrawingML）。
+
+  - id: frontend-slides
+    category: slides
+    path: skills/frontend-slides
+    repo: https://github.com/zarazhangrui/frontend-slides
+    description: 用 coding agent 前端能力做网页幻灯片。
+
+  - id: design-skills
+    category: design
+    path: skills/design-skills
+    repo: https://github.com/emilkowalski/skills
+    description: Design Engineering skills（含 apple-design）。
+    note: 也可 `npx skills@latest add emilkowalski/skills`
+
+  - id: cc-switch-cli-setup
+    category: tooling
+    path: skills/cc-switch-cli-setup
+    repo: https://github.com/Laip11/my-skills-hub
+    description: 用 cc-switch 安装并配置 Codex / Claude Code（及未来 Grok Build）的 API Key、Base URL 与模型。
+    note: hub-owned skill（非外部 submodule）
+
+categories:
+  writing-review: 论文写作 / 审稿
+  figures: 图表
+  dissemination: 论文传播
+  slides: 演示稿 / PPT
+  design: UI / 设计
+  tooling: 工具 / CLI 配置
