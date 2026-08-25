@@ -31,3 +31,12 @@
 [submodule "skills/design-skills"]
 	path = skills/design-skills
 	url = https://github.com/emilkowalski/skills.git
+[submodule "skills/drawio-skill"]
+	path = skills/drawio-skill
+	url = https://github.com/Agents365-ai/drawio-skill.git
+[submodule "skills/karpathy-guidelines"]
+	path = skills/karpathy-guidelines
+	url = https://github.com/multica-ai/andrej-karpathy-skills.git
+[submodule "skills/prompt-master"]
+	path = skills/prompt-master
+	url = https://github.com/nidhinjs/prompt-master.git
