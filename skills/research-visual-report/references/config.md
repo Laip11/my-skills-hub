@@ -23,7 +23,7 @@ CONFIG = {
     'field_groups': {
         '核心问题/背景': ('核心问题', '背景与缺口'),
         '具体方法': ('方法与训练', '系统结构', '记忆机制'),
-        '实验设置和结果': ('实验设置', '主要结果', '消融与机制证据', '局限与适用边界'),
+        '实验设置和结果': ('实验设置', '主要结果', '消融与机制证据', '局限与适用边界', '决策相关的消融或局限'),
     },
     'point_group_fields': ('具体方法',),
     'group_item_limits': {'实验设置和结果': 3},
@@ -77,6 +77,19 @@ For evidence-first literature reports, use the three-group configuration shown a
 - `实验设置和结果`: show no more than three source items, prioritizing evaluation setup, headline result, and one interpretation-changing ablation or limitation.
 
 Assign a different CSS class and color to each group, and keep the mapping stable across all cards. Additional fields may remain in the Markdown for traceability and search, but should not become additional colored top-level blocks.
+
+The recommended compact source form uses the canonical group names directly:
+
+```markdown
+- **Paper title**
+  - arXiv: https://arxiv.org/abs/2401.00001（Venue 2024）
+  - 图示: ![Method overview](assets/papers/2401.00001/main.png "Original caption")
+  - 核心问题/背景: One coherent problem-and-context paragraph.
+  - 具体方法: (1) Mechanism one; (2) mechanism two; (3) training or inference flow.
+  - 实验设置和结果: (1) Setup; (2) headline result; (3) one decision-relevant ablation or limitation.
+```
+
+`field_groups` also accepts the detailed source-field names listed in its tuples and folds them into the same three rendered blocks. This is useful when the Markdown doubles as a traceable research dossier. A card may use either the compact three-field form or the detailed form; do not duplicate both forms in the same card.
 
 Prose below a family heading is rendered as a family introduction before its cards. Keep the source paragraph intact. The builder must not manufacture recurring sublabels or rewrite evidence into a more assertive conclusion.
 

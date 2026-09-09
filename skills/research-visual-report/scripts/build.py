@@ -415,7 +415,7 @@ def render_card(title_raw, children, fam):
         source_to_group = {
             source_name: group_name
             for group_name, source_names in CFG['field_groups'].items()
-            for source_name in source_names
+            for source_name in (group_name, *source_names)
         }
         grouped = {group_name: [] for group_name in CFG['field_groups']}
         for fname, fval in content_fields:

@@ -21,7 +21,7 @@ CONFIG = """CONFIG = {
     'field_groups': {
         '核心问题/背景': ('核心问题', '背景'),
         '具体方法': ('方法',),
-        '实验设置和结果': ('实验结果', '补充证据'),
+        '实验设置和结果': ('实验结果', '决策相关的消融或局限'),
     },
     'point_group_fields': ('具体方法',),
     'group_item_limits': {'实验设置和结果': 1},
@@ -35,17 +35,15 @@ CARD_1 = """- **First paper**
   - 背景: First background
   - 方法: First method
   - 实验结果: First result
-  - 补充证据: Hidden detail
+  - 决策相关的消融或局限: Hidden detail
   - 图示: ![Method overview](figure.png "Original Figure 1 caption")
 """
 
 CARD_2 = """- **Second paper**
   - arXiv: https://arxiv.org/abs/2502.00002（Venue B）
-  - 核心问题: Second question
-  - 背景: Second background
-  - 方法: Second method
-  - 实验结果: Second result
-  - 补充证据: Another hidden detail
+  - 核心问题/背景: Second question and background
+  - 具体方法: (1) Second mechanism; (2) Second training flow
+  - 实验设置和结果: Second setup and result
 """
 
 
@@ -87,7 +85,9 @@ def main():
         assert output.count('>实验设置和结果</span>') == 2
         assert '<ul class="detail-points">' in output
         assert 'flabel f-q' in output and 'flabel f-m' in output and 'flabel f-r' in output
-        assert '<strong>补充证据:</strong>' not in output
+        assert '<strong>决策相关的消融或局限:</strong>' not in output
+        assert 'Second question and background' in output
+        assert 'Second mechanism' in output
         assert 'data:image/png;base64,' in output
         assert 'data-source="figure.png"' in output
 

@@ -41,7 +41,24 @@ The builder recognizes:
 - A top-level list item with a bold title and named child fields as a paper card.
 - Markdown tables, quotes, code blocks, paragraphs, nested lists, inline emphasis, code, and HTTP(S) links.
 
-Typical card source:
+### Rendered card contract
+
+Use this compact form when the Markdown is already written for the final report. These are the only three colored content blocks that should appear in each rendered paper card:
+
+```markdown
+- **Paper title**（optional note）
+  - arXiv: https://arxiv.org/abs/2401.00001（Venue 2024）
+  - 图示: ![Figure 2: Method overview](assets/papers/2401.00001/figure-002-01.png "原始图注")
+  - 核心问题/背景: 用一个连贯段落说明研究问题、背景以及既有方法的关键缺口。
+  - 具体方法: (1) 核心机制及其作用；(2) 与相关方法的关键差异；(3) 训练或推理流程。
+  - 实验设置和结果: (1) 模型、任务、基线与指标；(2) 可核验的核心结果；(3) 最影响结论解读的消融、失败案例或局限。
+```
+
+The figure is separate from the three content blocks. The title, source link, venue, date, and optional note are metadata rather than colored content blocks.
+
+### Detailed research-dossier fields
+
+When the research Markdown needs finer-grained evidence for traceability, it may retain detailed source fields instead:
 
 ```markdown
 - **Paper title**（optional note）
@@ -55,7 +72,9 @@ Typical card source:
   - 决策相关的消融或局限: ...
 ```
 
-Configure `field_groups` so that the visual card exposes exactly three top-level blocks: `核心问题 / 背景`, `具体方法`, and `实验设置和结果`. Give each block a distinct color and keep those colors consistent across every paper. Render method components as separate points. Limit the visible experiment block to at most three points—normally the setup, headline comparison, and one decision-relevant ablation, failure case, or limitation—while allowing secondary evidence to remain searchable in the source dossier.
+This is a source schema, not the visible card schema. Configure `field_groups` to map these detailed fields into exactly three rendered blocks: `核心问题 / 背景`, `具体方法`, and `实验设置和结果`. A card may use either the compact three-field form or the detailed form; do not duplicate both forms in the same card.
+
+Give each rendered block a distinct color and keep those colors consistent across every paper. Render method components as separate points. Limit the visible experiment block to at most three points—normally the setup, headline comparison, and one decision-relevant ablation, failure case, or limitation—while allowing secondary evidence to remain searchable in the source dossier.
 
 If a paper has a selected main figure, render exactly one figure immediately below the title and source metadata, before the three content blocks. Do not create a gallery unless the user explicitly requests one.
 
