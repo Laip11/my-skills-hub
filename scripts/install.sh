@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# Install skills from this hub into a local agent skills directory.
-# Default: symlink into ~/.cursor/skills (does NOT merge into one skill).
+# Install skills from this hub into one or more Agent Skills directories.
+# Default: symlink into ~/.agents/skills, shared by Codex and Cursor.
 
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILLS_DIR="$ROOT/skills"
 
-TARGET="cursor"
+TARGET="shared"
 MODE="link" # link | copy
 ONLY=""
 DRY_RUN=0
@@ -17,16 +17,19 @@ usage() {
 Usage: ./scripts/install.sh [options]
 
 Options:
-  --target cursor|claude|codex|DIR   Install destination (default: cursor)
+  --target shared|cursor|claude|codex|all|DIR
+                                      Install destination (default: shared)
   --mode link|copy                   Symlink (default) or copy
   --only id1,id2                     Only install these skill ids
   --dry-run                          Print actions without changing files
   -h, --help                         Show help
 
 Destinations:
+  shared  -> ~/.agents/skills (Codex + Cursor)
+  codex   -> ~/.agents/skills
   cursor  -> ~/.cursor/skills
   claude  -> ~/.claude/skills
-  codex   -> ~/.codex/skills
+  all     -> ~/.agents/skills + ~/.claude/skills
 EOF
 }
 
@@ -42,18 +45,17 @@ while [[ $# -gt 0 ]]; do
 done
 
 case "$TARGET" in
-  cursor) DEST="${HOME}/.cursor/skills" ;;
-  claude) DEST="${HOME}/.claude/skills" ;;
-  codex)  DEST="${HOME}/.codex/skills" ;;
-  *)      DEST="$TARGET" ;;
+  shared|codex) DESTS=("${HOME}/.agents/skills") ;;
+  cursor)       DESTS=("${HOME}/.cursor/skills") ;;
+  claude)       DESTS=("${HOME}/.claude/skills") ;;
+  all)          DESTS=("${HOME}/.agents/skills" "${HOME}/.claude/skills") ;;
+  *)            DESTS=("$TARGET") ;;
 esac
 
 if [[ ! -d "$SKILLS_DIR" ]]; then
   echo "Missing $SKILLS_DIR — run: git submodule update --init --recursive" >&2
   exit 1
 fi
-
-mkdir -p "$DEST"
 
 should_install() {
   local id="$1"
@@ -63,8 +65,9 @@ should_install() {
 
 install_one() {
   local id="$1"
+  local dest="$2"
   local src="$SKILLS_DIR/$id"
-  local dst="$DEST/$id"
+  local dst="$dest/$id"
 
   if [[ ! -e "$src" ]]; then
     echo "skip  $id (submodule missing; run sync/init first)"
@@ -102,10 +105,15 @@ install_one() {
 
 shopt -s nullglob
 found=0
-for src in "$SKILLS_DIR"/*/; do
-  id="$(basename "$src")"
-  install_one "$id"
-  found=1
+for dest in "${DESTS[@]}"; do
+  if [[ "$DRY_RUN" -eq 0 ]]; then
+    mkdir -p "$dest"
+  fi
+  for src in "$SKILLS_DIR"/*/; do
+    id="$(basename "$src")"
+    install_one "$id" "$dest"
+    found=1
+  done
 done
 shopt -u nullglob
 
@@ -116,5 +124,5 @@ if [[ "$found" -eq 0 ]]; then
 fi
 
 echo
-echo "Done. Destination: $DEST"
+echo "Done. Destination(s): ${DESTS[*]}"
 echo "Restart / reload your agent so skills are picked up."

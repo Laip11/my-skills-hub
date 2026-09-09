@@ -95,7 +95,24 @@ skills:
     description: 用 cc-switch 安装并配置 Codex / Claude Code（及未来 Grok Build）的 API Key、Base URL 与模型。
     note: hub-owned skill（非外部 submodule）
 
+  - id: paper-evidence-research
+    category: research
+    path: skills/paper-evidence-research
+    repo: https://github.com/Laip11/my-skills-hub
+    description: 基于论文正文和原始图表开展可追溯的证据型调研，输出结构化报告、证据账本与论文主图。
+    agents: [codex, claude-code, cursor]
+    note: hub-owned；遵循 Agent Skills 标准
+
+  - id: research-visual-report
+    category: research
+    path: skills/research-visual-report
+    repo: https://github.com/Laip11/my-skills-hub
+    description: 将结构化调研 Markdown 构建为可搜索、可筛选、含主图与论文卡片的单文件 HTML 报告。
+    agents: [codex, claude-code, cursor]
+    note: hub-owned；遵循 Agent Skills 标准
+
 categories:
+  research: 论文调研 / 可视化报告
   writing-review: 论文写作 / 审稿
   figures: 图表
   dissemination: 论文传播

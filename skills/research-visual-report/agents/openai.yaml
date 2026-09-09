@@ -1,0 +1,5 @@
+interface:
+  display_name: "Research Visual Report"
+  short_description: "将结构化调研稿构建为含论文主图、分组卡片与方法总结的专业网页报告"
+  brand_color: "#0071E3"
+  default_prompt: "Use $research-visual-report to turn my structured research Markdown into a polished interactive HTML report."

@@ -1,6 +1,6 @@
 # Skills Hub
 
-个人 Agent Skills 合集：以 git submodule 收录上游仓库，提供分类索引与安装入口。各 skill 相互独立，保持原仓库结构。
+个人 Agent Skills 合集：以 git submodule 收录上游仓库，并维护少量 hub-owned Skill。仓库采用 Agent Skills 的 `SKILL.md` 结构，提供面向 Codex、Claude Code 和 Cursor 的统一安装入口。
 
 机器可读索引见 [`catalog.yaml`](catalog.yaml)。
 
@@ -8,6 +8,8 @@
 
 | 分类 | Skill | 上游 |
 |------|-------|------|
+| 论文调研 / 可视化报告 | [paper-evidence-research](skills/paper-evidence-research) | hub-owned |
+| 论文调研 / 可视化报告 | [research-visual-report](skills/research-visual-report) | hub-owned |
 | 论文写作 / 审稿 | [anti-defensive-writing](skills/anti-defensive-writing) | [Kiterlin/anti-defensive-writing](https://github.com/Kiterlin/anti-defensive-writing) |
 | 论文写作 / 审稿 | [academic-research-skills](skills/academic-research-skills) | [imbad0202/academic-research-skills](https://github.com/imbad0202/academic-research-skills) |
 | 论文写作 / 审稿 | [citation-check-skill](skills/citation-check-skill) | [serenakeyitan/citation-check-skill](https://github.com/serenakeyitan/citation-check-skill) |
@@ -34,12 +36,16 @@ cd skills-hub
 # 已克隆时初始化子模块
 git submodule update --init --recursive
 
-# 安装到本机 skills 目录（默认 Cursor）
-./scripts/install.sh                  # ~/.cursor/skills
+# 安装到本机 skills 目录
+./scripts/install.sh                  # ~/.agents/skills（Codex + Cursor）
 ./scripts/install.sh --target claude  # ~/.claude/skills
-./scripts/install.sh --target codex   # ~/.codex/skills
+./scripts/install.sh --target cursor  # ~/.cursor/skills
+./scripts/install.sh --target codex   # ~/.agents/skills
+./scripts/install.sh --target all     # Codex + Cursor + Claude Code
 ./scripts/install.sh --only visual-deck,paper-plot-skills
 ```
+
+不同 Agent 的发现路径和调用方式见[兼容性说明](docs/agent-compatibility.md)。
 
 同步上游更新：
 
@@ -48,6 +54,15 @@ git submodule update --init --recursive
 ```
 
 ## Skill 说明
+
+### 论文调研 / 可视化报告
+
+| Skill | 说明 |
+|-------|------|
+| paper-evidence-research | 从 arXiv HTML、PDF、正文表格与附录核实论文证据，生成 `report.md`、证据账本和授权明确的论文主图 |
+| research-visual-report | 将结构化调研稿构建为专业的交互式单文件 HTML，支持分类、搜索、折叠、主图和三类证据卡片 |
+
+建议先用 `paper-evidence-research` 完成调研，再用 `research-visual-report` 生成网页。
 
 ### 论文写作 / 审稿
 
@@ -125,21 +140,24 @@ npx skills@latest add emilkowalski/skills
 写代码 → karpathy-guidelines
 写 Prompt → prompt-master
 CLI  → cc-switch-cli-setup（Codex / Claude Code 供应商切换）
+
+论文调研 → paper-evidence-research → research-visual-report
 ```
 
 ## 仓库结构
 
 ```text
-skills-hub/
+my-skills-hub/
 ├── README.md
 ├── catalog.yaml          # 索引元数据
-├── skills/               # 各 skill 的 git submodule
+├── docs/                 # 跨 Agent 使用说明
+├── skills/               # 上游 submodule 与 hub-owned skills
 └── scripts/
-    ├── install.sh        # 安装到本机 skills 目录（默认 symlink）
+    ├── install.sh        # 安装到 Codex / Claude Code / Cursor
     └── sync.sh           # 同步各 submodule
 ```
 
 ## 说明
 
-- 各子目录对应独立上游仓库，许可证与用法以该仓库的 README / `SKILL.md` 为准。
+- submodule 的许可证与用法以上游仓库为准；hub-owned Skill 使用本仓库许可证。
 - `install.sh` 默认以 symlink 安装，便于跟随 `sync.sh` 更新。
