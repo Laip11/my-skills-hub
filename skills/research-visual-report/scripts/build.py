@@ -67,6 +67,7 @@ DEFAULT_CONFIG = {
     'eyebrow': '调研报告',
     'meta_desc': '',
     'footer': '',
+    'nav_links': [('Homepage', '/'), ('Research Blog', '/blog/')],
     'hero_stats': [('{n_cards}', '方法卡片'), ('{n_fams}', '分类体系')],
     'search_placeholder': '搜索方法名、关键词、环境…',
     'sort_button': '⇅ 最新优先',
@@ -156,6 +157,13 @@ def validate_config(cfg):
                 raise ValueError('group_item_limits values must be positive integers')
     if not isinstance(cfg['max_image_bytes'], int) or cfg['max_image_bytes'] < 1:
         raise ValueError('max_image_bytes must be a positive integer')
+    if not isinstance(cfg['nav_links'], (tuple, list)):
+        raise ValueError('nav_links must be a tuple or list')
+    for link in cfg['nav_links']:
+        if not isinstance(link, (tuple, list)) or len(link) != 2:
+            raise ValueError('each nav link must be (label, href)')
+        if not isinstance(link[0], str) or not isinstance(link[1], str):
+            raise ValueError('nav link labels and hrefs must be strings')
 
 def deep_merge(base, over):
     out = dict(base)
@@ -186,11 +194,37 @@ if not os.path.exists(os.path.join(ASSETS, 'style.css')):
     ASSETS = os.path.abspath(os.path.join(SCRIPT_DIR, '..', 'assets'))
 CSS  = open(os.path.join(ASSETS, 'style.css'), encoding='utf-8').read()
 JS   = open(os.path.join(ASSETS, 'app.js'), encoding='utf-8').read()
+BUILD_ERRORS = []
+TEMPLATE_PATH = os.path.join(ASSETS, 'report-template.html')
+SHELL_PATH = os.path.join(ASSETS, 'page-shell.html')
+if not os.path.exists(TEMPLATE_PATH):
+    BUILD_ERRORS.append('canonical report template is missing: assets/report-template.html')
+else:
+    TEMPLATE_HTML = open(TEMPLATE_PATH, encoding='utf-8').read()
+    required_template_markers = (
+        'class="report-nav"', 'class="progress"', 'class="hero-chips"',
+        'class="toc"', 'class="toolbar"', 'class="fam-intro"',
+        'class="paper-figure"', 'class="compare-table"',
+        'data-theme-toggle', 'data-toggle-all', 'class="to-top"',
+    )
+    missing_template_markers = [m for m in required_template_markers if m not in TEMPLATE_HTML]
+    if missing_template_markers:
+        BUILD_ERRORS.append('canonical report template is missing markers: ' + ', '.join(missing_template_markers))
+if not os.path.exists(SHELL_PATH):
+    BUILD_ERRORS.append('page shell is missing: assets/page-shell.html')
+    PAGE_SHELL = ''
+else:
+    PAGE_SHELL = open(SHELL_PATH, encoding='utf-8').read()
+    required_slots = ('LANG', 'TITLE', 'META_DESC', 'CSS', 'BRAND', 'NAV_LINKS', 'EYEBROW',
+                      'HERO_TITLE', 'STATS', 'HERO_INTRO', 'HERO_CHIPS', 'TOC', 'BODY',
+                      'FOOTER', 'RUNTIME_CONFIG', 'JS')
+    missing_slots = [name for name in required_slots if '{{' + name + '}}' not in PAGE_SHELL]
+    if missing_slots:
+        BUILD_ERRORS.append('page shell is missing slots: ' + ', '.join(missing_slots))
 OUT  = CFG['out'] or os.path.splitext(MD_PATH)[0] + '.html'
 FAMS = CFG['fams']
 FAM_KEYS = ''.join(FAMS.keys())
 FAM_CLASS = '[' + FAM_KEYS + ']'
-BUILD_ERRORS = []
 OMITTED_SOURCE_LINES = set()
 CARD_SEQ = 0
 
@@ -746,7 +780,8 @@ HTML_DOC = ('<!DOCTYPE html>\n<html lang="' + html.escape(CFG['lang'], quote=Tru
     '<noscript><style>.reveal{opacity:1 !important;transform:none !important}</style></noscript>\n</head>\n<body>\n'
     '<nav class="nav"><div class="nav-inner">'
     '<a class="nav-brand" href="#top"><span class="nav-dot"></span><span class="t">' + html.escape(CFG['brand']) + '</span></a>'
-    '<button class="theme-toggle" type="button" data-theme-toggle aria-label="切换明暗主题" title="切换明暗主题">◐</button>'
+    '<div class="report-nav"><a href="../../../">Homepage</a><a href="../../">Research Blog</a>'
+    '<button class="theme-toggle" type="button" data-theme-toggle aria-label="切换明暗主题" title="切换明暗主题">◐</button></div>'
     '</div><div class="progress"></div></nav>\n'
     '<header class="hero" id="top"><span class="eyebrow">' + html.escape(CFG['eyebrow']) + '</span>'
     '<h1>' + inline(hero_title) + '</h1>'
@@ -761,6 +796,34 @@ HTML_DOC = ('<!DOCTYPE html>\n<html lang="' + html.escape(CFG['lang'], quote=Tru
     '<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>\n'
     '<script type="application/json" id="rvr-config">' + RUNTIME_CONFIG + '</script>\n'
     '<script>' + JS + '</script>\n</body>\n</html>')
+
+# The page shell is the canonical visual contract. The legacy inline assembly
+# above remains as a readable fallback, while normal builds render through the
+# versioned shell asset so layout changes are made in one place.
+if PAGE_SHELL:
+    nav_links_html = ''.join('<a href="' + html.escape(href, quote=True) + '">' +
+                             html.escape(label) + '</a>' for label, href in CFG['nav_links'])
+    replacements = {
+        'LANG': html.escape(CFG['lang'], quote=True),
+        'TITLE': html.escape(hero_title),
+        'META_DESC': html.escape(CFG['meta_desc'], quote=True),
+        'CSS': CSS,
+        'BRAND': html.escape(CFG['brand']),
+        'NAV_LINKS': nav_links_html,
+        'EYEBROW': html.escape(CFG['eyebrow']),
+        'HERO_TITLE': inline(hero_title),
+        'STATS': stats_html,
+        'HERO_INTRO': quote_html,
+        'HERO_CHIPS': hero_chips,
+        'TOC': toc_html,
+        'BODY': body_html,
+        'FOOTER': html.escape(CFG['footer']),
+        'RUNTIME_CONFIG': RUNTIME_CONFIG,
+        'JS': JS,
+    }
+    HTML_DOC = PAGE_SHELL
+    for key, value in replacements.items():
+        HTML_DOC = HTML_DOC.replace('{{' + key + '}}', value)
 
 # ---------------- verification: no md content lost ----------------
 def norm(s):

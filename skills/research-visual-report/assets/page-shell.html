@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{TITLE}}</title>
+<meta name="description" content="{{META_DESC}}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<style>{{CSS}}</style>
+<noscript><style>.reveal{opacity:1 !important;transform:none !important}</style></noscript>
+</head>
+<body>
+<nav class="nav"><div class="nav-inner"><a class="nav-brand" href="#top"><span class="nav-dot"></span><span class="t">{{BRAND}}</span></a><div class="report-nav">{{NAV_LINKS}}<button class="theme-toggle" type="button" data-theme-toggle aria-label="切换明暗主题" title="切换明暗主题">◐</button></div></div><div class="progress"></div></nav>
+<header class="hero" id="top"><span class="eyebrow">{{EYEBROW}}</span><h1>{{HERO_TITLE}}</h1><div class="stats">{{STATS}}</div><div class="callout" style="text-align:left;max-width:840px;margin:26px auto 0">{{HERO_INTRO}}</div><div class="hero-chips">{{HERO_CHIPS}}</div></header>
+<div class="layout"><aside class="toc">{{TOC}}</aside><main>{{BODY}}</main></div>
+<button class="to-top" type="button" aria-label="回到顶部">↑</button>
+<footer>{{FOOTER}}</footer>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script type="application/json" id="rvr-config">{{RUNTIME_CONFIG}}</script>
+<script>{{JS}}</script>
+</body>
+</html>

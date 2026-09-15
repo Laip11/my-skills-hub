@@ -47,9 +47,12 @@ code.il{font-family:var(--mono);font-size:.85em;background:rgba(0,0,0,.05);
 .nav-inner{max-width:1240px;margin:0 auto;height:54px;display:flex;align-items:center;gap:22px;padding:0 22px}
 .nav-brand{display:flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px;white-space:nowrap;color:var(--ink)}
 .nav-brand:hover{text-decoration:none}
+.report-nav{margin-left:auto;display:flex;align-items:center;gap:6px}
+.report-nav>a{padding:5px 10px;border-radius:999px;color:var(--ink3);font-size:13px;font-weight:600}
+.report-nav>a:hover{color:var(--accent);background:var(--accent-soft);text-decoration:none}
 .nav-dot{width:10px;height:10px;border-radius:50%;
   background:linear-gradient(135deg,#0071e3,#af52de)}
-.theme-toggle{margin-left:auto;width:32px;height:32px;border:1px solid var(--line);border-radius:50%;
+.theme-toggle{margin-left:4px;width:32px;height:32px;border:1px solid var(--line);border-radius:50%;
   background:var(--surface);color:var(--ink2);font:inherit;cursor:pointer;box-shadow:var(--shadow-sm)}
 .progress{position:absolute;left:0;bottom:-1px;height:2px;width:0;
   background:linear-gradient(90deg,#0071e3,#af52de);transition:width .1s linear}
@@ -322,6 +325,7 @@ footer a{color:var(--ink2)}
   .card-link{font-size:12px;padding:4px 9px}
   .card-venue{max-width:120px}
   .nav-brand span.t{display:none}
+  .report-nav>a:first-child{display:none}
   .toolbar{top:62px}
   .toolbar::before{top:-9px;height:8px}
 }

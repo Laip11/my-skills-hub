@@ -1,5 +1,5 @@
 interface:
   display_name: "Paper Evidence Research"
-  short_description: "基于论文正文核实证据、提炼方法并生成专业的图文调研报告"
+  short_description: "对指定领域进行全面文献检索、正文核验与覆盖审计"
   brand_color: "#5856D6"
-  default_prompt: "Use $paper-evidence-research to research this topic, verify claims against primary papers, and collect selected report-ready figures."
+  default_prompt: "Use $paper-evidence-research to conduct a comprehensive study of this specified field, cover every discoverable in-scope paper, verify claims against primary paper text, and provide an auditable coverage record."

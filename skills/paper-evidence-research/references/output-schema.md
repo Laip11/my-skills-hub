@@ -6,6 +6,9 @@
 research-project/
 ├── report.md
 ├── evidence-ledger.md
+├── search-log.md
+├── candidate-ledger.csv
+├── coverage-audit.md
 ├── unresolved.md
 └── assets/
     └── papers/
@@ -16,6 +19,49 @@ research-project/
 ```
 
 Use stable arXiv IDs without filesystem-hostile characters for directory names. Keep paths in `report.md` relative to the report.
+
+## Required coverage-audit artifacts
+
+The search log, candidate ledger, and coverage audit are required parts of every research result produced by this Skill, not optional working notes.
+
+The candidate ledger should contain at least:
+
+- record_id
+- canonical_title
+- aliases_or_versions
+- authors
+- year
+- venue_or_repository
+- persistent_id_or_url
+- discovery_routes
+- relevance_tier
+- eligibility_status
+- exclusion_reason
+- full_text_status
+- evidence_status
+- report_entry
+
+The search log should contain at least:
+
+- query_id
+- source_or_database
+- exact_query_or_traversal
+- search_date
+- filters
+- raw_result_count
+- newly_added_canonical_records
+- notes
+
+The coverage audit should state:
+
+- total raw records and canonical records
+- duplicate and version merges
+- counts by relevance tier and eligibility status
+- full-text retrieval success and unresolved count
+- papers found only through citation chaining, entity search, or adversarial terminology
+- reconciliation results against relevant surveys or seed-paper related-work tables
+- saturation-pass results and remaining blind spots
+- whether the corpus is complete under the frozen protocol or remains provisional
 
 ## Paper card
 

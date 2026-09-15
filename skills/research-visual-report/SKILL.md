@@ -5,18 +5,18 @@ description: Build a polished interactive HTML research report from structured M
 
 # Research Visual Report
 
-Turn structured Markdown into a polished research-reading experience modeled on high-end editorial product pages. Preserve the source document as the single source of truth; treat generated HTML as a build artifact. The visual hierarchy should clarify the research argument without introducing new claims or replacing analytical prose with interface copy.
+Turn structured Markdown into a polished research-reading experience using the packaged report template as the fixed visual foundation. Preserve the source document as the single source of truth; treat generated HTML as a build artifact. The visual hierarchy should clarify the research argument without introducing new claims or replacing analytical prose with interface copy.
 
 In command examples, resolve `<skill>` to the directory containing this `SKILL.md`; never pass the placeholder literally. This convention is portable across Codex, Claude Code and Cursor.
 
 ## Workflow
 
 1. Inspect the source structure and identify the section that contains paper cards.
-2. Copy the builder and assets into the project:
+2. Copy the builder and the complete asset set into the project. Do not copy only CSS and JavaScript; the HTML shell and visual reference are part of the build contract:
 
    ```bash
    mkdir -p .build
-   cp <skill>/scripts/build.py <skill>/assets/{style.css,app.js} .build/
+   cp <skill>/scripts/build.py <skill>/assets/{style.css,app.js,page-shell.html,report-template.html} .build/
    ```
 
 3. Create a literal `config.py` containing only `CONFIG = {...}`. Read [references/config.md](references/config.md) for configuration details.
@@ -30,6 +30,27 @@ In command examples, resolve `<skill>` to the directory containing this `SKILL.m
 6. Serve the output locally and verify desktop and mobile rendering, search, family filters, sort, card folding, keyboard focus, theme switching, TOC scroll-spy, and print layout.
 
 When modifying the Skill itself, run `python3 <skill>/scripts/self_test.py` before delivery.
+
+## Fixed template contract
+
+Use [assets/report-template.html](assets/report-template.html) as the visible reference for every report. It is an intentionally sparse, directly openable page that demonstrates the complete layout with one method family and one paper card. Use [assets/page-shell.html](assets/page-shell.html) as the build-time shell; the builder fills its named slots with escaped report content, navigation, CSS and JavaScript.
+
+Do not redesign the page for each topic. Keep the template's navigation, hero, statistics, quick links, sticky table of contents, section headers, method-family introductions, two-row paper toolbar, paper metadata alignment, single main figure, three evidence blocks, comparison table, theme switch, progress indicator and back-to-top control. Topic-specific customization is limited to content, family labels and colors, hero copy, statistics, navigation destinations and optional supported diagrams.
+
+The default report outline is:
+
+1. Scope, research questions and inclusion criteria
+2. Terminology and unified view
+3. Method evolution and research map
+4. Core papers grouped by method family
+5. Coverage and corpus structure
+6. Cross-paper synthesis
+7. Method selection and implementation guidance
+8. Open questions
+9. Evidence boundaries
+10. Primary sources
+
+Preserve this outline when the source supports it. A source may add, rename or omit sections when the research question genuinely requires it; do not invent empty analytical content merely to fill the template.
 
 ## Source conventions
 
@@ -90,6 +111,9 @@ Within a family list, do not mix card-shaped items with ordinary list items. The
 - Do not silently rewrite, summarize, or fact-check research content. If the user requests content verification, perform that as a separate, explicitly scoped task before building.
 - Preserve claim strength, qualification, terminology and numerical units from the Markdown. Interface labels may group fields, but must not strengthen conclusions or synthesize new prose.
 - Keep family cards date-ascending in Markdown. Readers can switch to newest-first in the report.
+- Show exactly one date badge per paper. Show a confirmed conference, journal, Findings or Workshop venue as a separate badge beside the date; do not display internal source-type labels such as `Direct`.
+- Keep the default navigation structure as report title on the left and `Homepage` / `Research Blog` on the right. Configure destinations with `nav_links`; on mobile, hide `Homepage` and retain `Research Blog`.
+- Keep the HTML structure and component class names supplied by `report-template.html` and `page-shell.html`. Make reusable visual changes in these packaged assets, not as one-off generated markup.
 - Treat `config.py` and Markdown as data. The builder does not execute the config and escapes generated HTML attributes and text.
 - A failed build must return a nonzero exit status and leave the previous successful HTML untouched.
 - The report is one HTML document, but KaTeX enhancement uses an optional CDN; mathematical source remains readable when the CDN is unavailable.

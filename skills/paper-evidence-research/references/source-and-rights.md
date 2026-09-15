@@ -11,6 +11,20 @@
 
 An arXiv ID without a `vN` suffix resolves to the latest version through the API. Record the resolved version returned by arXiv. The API distinguishes the first publication date from the latest update date.
 
+## Default full-text retrieval
+
+For every arXiv candidate that survives initial screening, use the resolved-version arXiv HTML page as the first full-text endpoint. Extract the section hierarchy, method and experiment prose, tables, figure inventory and captions from that page. Do not use the abstract page as a substitute for full-text reading.
+
+Escalate to the official PDF when any of these conditions apply:
+
+- arXiv HTML is unavailable or does not contain the relevant section;
+- equations, tables, references or appendices are missing or visibly malformed;
+- image links resolve incorrectly or a multi-panel figure is incomplete;
+- the claim depends on page layout or formatting that HTML does not preserve;
+- HTML and another official version appear to conflict.
+
+Record which surface supported each claim. When PDF verification changes an HTML-derived value or interpretation, retain the PDF locator and note the discrepancy in the evidence ledger.
+
 The official API manual asks clients making repeated calls to wait at least three seconds, cache results, and use smaller pages. Do not parallelize a burst of arXiv API calls.
 
 ## alphaXiv boundary
@@ -28,11 +42,13 @@ Before including a claim in the research report, verify it against official pape
 
 ## Figure extraction hierarchy
 
-1. Prefer figures exposed by official arXiv HTML because they retain HTML figure structure, image URLs, figure IDs and captions.
-2. If the HTML conversion is absent or visibly incorrect, extract from the official PDF.
-3. If a figure is composed of multiple panels or images, retain the complete figure unless a cropped panel is necessary and scientifically unambiguous.
-4. Check the downloaded image visually. Reject broken conversions, missing legends, unreadable text and incomplete panels.
-5. Keep the original file separate from any derivative crop or annotation. Record transformations in the manifest.
+1. Inventory figures from official arXiv HTML because it retains figure structure, image URLs, IDs and captions.
+2. Inspect Figure 1 and Figure 2 first as likely overview/main-result candidates. Compare them against later method, pipeline and central-result figures before committing a choice.
+3. Select for explanatory value to the research question, not merely low figure number. Reject early teaser art, decorative montages, redundant examples and figures whose text is unreadable at report width.
+4. If the HTML conversion is absent or visibly incorrect, extract from the official PDF.
+5. If a figure is composed of multiple panels or images, retain the complete figure unless a cropped panel is necessary and scientifically unambiguous.
+6. Check the downloaded image visually. Reject broken conversions, missing legends, unreadable text and incomplete panels.
+7. Keep the original file separate from any derivative crop or annotation. Record transformations in the manifest.
 
 ## Rights and attribution
 

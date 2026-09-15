@@ -53,6 +53,7 @@ The builder parses this file without executing Python. Function calls, imports, 
 | `max_image_bytes` | `12000000` | Maximum size allowed for each local figure |
 | `alphaxiv` | `True` | Rewrite arXiv abstract links to alphaXiv |
 | `default_date` | `('2026', '2026.99')` | Display value and sort key for undated cards |
+| `nav_links` | Homepage and Research Blog | Ordered `(label, href)` pairs rendered on the right side of the fixed navigation |
 
 Family keys must be lowercase `a` through `h`; colors must use `#RRGGBB`. Configure no more than eight families.
 
@@ -95,7 +96,13 @@ Prose below a family heading is rendered as a family introduction before its car
 
 ## Page copy
 
-Use `brand`, `eyebrow`, `meta_desc`, `footer`, and `hero_stats` for report-specific copy. `hero_stats` accepts `{n_cards}` and `{n_fams}` placeholders.
+Use `brand`, `eyebrow`, `meta_desc`, `footer`, `hero_stats`, and `nav_links` for report-specific copy. `hero_stats` accepts `{n_cards}` and `{n_fams}` placeholders. Prefer root-relative navigation destinations for reports published beneath a website:
+
+```python
+'nav_links': [('Homepage', '/'), ('Research Blog', '/blog/')],
+```
+
+The visible structure is defined by `assets/report-template.html`; `assets/page-shell.html` contains the build slots. Do not put report-specific prose into either template.
 
 Toolbar text is configured with `search_placeholder`, `sort_button`, `sort_button_alt`, `collapse_button`, `expand_button`, `count_tpl`, and `toc_title`. `count_tpl` accepts `{visible}` and `{total}`.
 

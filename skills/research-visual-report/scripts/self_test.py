@@ -8,6 +8,7 @@ import tempfile
 
 
 BUILDER = Path(__file__).with_name('build.py')
+ASSETS = BUILDER.parent.parent / 'assets'
 
 CONFIG = """CONFIG = {
     'card_section': '4',
@@ -62,6 +63,8 @@ def run_build(folder):
 
 
 def main():
+    assert (ASSETS / 'report-template.html').is_file()
+    assert (ASSETS / 'page-shell.html').is_file()
     with tempfile.TemporaryDirectory(prefix='rvr-self-test-') as temp:
         folder = Path(temp)
         (folder / 'config.py').write_text(CONFIG, encoding='utf-8')
@@ -73,6 +76,11 @@ def main():
         passed = run_build(folder)
         assert passed.returncode == 0, passed.stdout + passed.stderr
         output = (folder / 'report.html').read_text(encoding='utf-8')
+        assert 'class="report-nav"' in output
+        assert '<a href="/">Homepage</a>' in output
+        assert '<a href="/blog/">Research Blog</a>' in output
+        assert not any('{{' + slot + '}}' in output for slot in
+                       ('LANG', 'TITLE', 'CSS', 'BODY', 'JS'))
         assert 'data-card-section="true"' in output
         assert output.count('data-fam="a" data-color=') == 1
         assert 'www.alphaxiv.org/abs/2401.00001' in output
